@@ -8,6 +8,8 @@ This capstone project is in partial fulfillment of the degree requirements for t
 [Gordon &amp; Judy Dutile Honors Program](https://www.sbuniv.edu/academics/honors-program.php)
 at [Southwest Baptist University](https://www.sbuniv.edu).
 
+This project was built on an M1 MacBook Pro and may have specific steps for the specific OS/CPU combination.
+
 ### Development Iterations
 
 Development will occur in one-week iterations, beginning with the Stanford CS140e curriculum in mind,
