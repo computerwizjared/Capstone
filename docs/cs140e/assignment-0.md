@@ -105,3 +105,21 @@ Off!
 ```
 
 I then used `Ctrl+A`, then `K`, then `y` to exit the serial console, and unplugged my Pi from my MacBook.
+
+## Phase 2
+
+With my Raspberry Pi disconnected from my MacBook, I set up the breadboard according to this diagram.
+I only had a 1.6k ohm resistor, but it worked fine in this case.
+
+![Diagram of Raspberry Pi and Breadboard for Always On LED](assets/always-on-led-circuit.svg?raw=true&sanitize=true)
+
+I plugged in the Pi to my MacBook, and the LED lit up, as it was supposed to!
+
+![Photo of Raspberry Pi and Breadboard for Always On LED](assets/always-on-led-photo.jpg?raw=true)
+
+I then unplugged the Pi, and set up the breadboard according to this diagram.
+
+![Diagram of Raspberry Pi and Breadboard for Blinking LED](assets/gpio-16-led-circuit.svg?raw=true&sanitize=true)
+
+I put the SD card into my MacBook, and copied `blinky/files/gpio16-blink.bin` to it, renaming it to `kernel8.img`.
+I put the SD card back into the Pi, plugged it back in, and the LED started blinking rapidly, which means all is working!
