@@ -131,3 +131,80 @@ Blink off...
 Blink on...
 Blink off...
 ```
+
+## Phase 3
+
+First, I installed Xcode tools on my MacBook using this command:
+
+```
+xcode-select --install
+```
+
+I also installed Homebrew using this command:
+
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+I then installed the 64-bit ARM toolchain to be able to compile an OS for the Raspberry Pi.
+I decided to use `gcc-aarch64-embedded` rather than the `SergioBenitez/osxct` (CS140e-provided) package because it is the official ARM package and is more up-to-date.
+
+```
+$ brew install --cask gcc-aarch64-embedded
+```
+
+I verified it was installed correctly:
+
+```
+aarch64-none-elf-gcc --version
+```
+
+```
+aarch64-none-elf-gcc (GNU Toolchain for the Arm Architecture 11.2-2022.02 (arm-11.14)) 11.2.1 20220111
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+```
+
+I have included the CS140e-provided documentation here for reference, in case the original site goes down.
+This is similar to the BCM2835 documentation, with some edits specific to the BCM2837 (the Pi 3B processor).
+
+According to the documentation, the BCM2837 has a base peripheral address of `0x7E000000` which is at physical address 0x3F000000.
+This means to control the GPIO pins, we need to use this address.
+Here is documentation specific to the registers used in this assignment:
+
+| name | peripheral address | description | size | read/write
+| --- | --- | --- | --- | --- | --- |
+| GPFSEL1 | 0x7E200004 | GPIO Function Select 1 | 32 bits | R/W |
+| GPSET0 | 0x7E20001C | GPIO Pin Output Set 0 | 32 bits | W |
+| GPCLR0 | 0x7E200028 | GPIO Pin Output Clear 0 | 32 bits | W |
+
+To set pin 16 as an output, we need to write `001` to field FSEL16 (bits 20-18) in register GPFSEL1 (address `0x7E200004`).
+To set pin 16 (turn it on), we need write `1` to field SET16 (bit 16) in register GPSET0 (address `0x7E20001C`).
+To clear pin 16 (turn it off), we need to write `1` to field CLR16 (bit 16) in register GPCLR0 (address `0x7E200028`).
+
+I then opened the `blinky/phase3/blinky.c` file, and edited it to add the blink functionality.
+
+```diff
+int main(void) {
+-  // FIXME: STEP 1: Set GPIO Pin 16 as output.
++  // 18 is the lower bit for pin 16 (bits 20-18)
++  // | is bitwise OR operator
++  *GPIO_FSEL1 |= (0b001 << 18); 
++  
+-  // FIXME: STEP 2: Continuously set and clear GPIO 16.
++  // infinite loop
++  for (;;) {
++    // set pin 16 (turn it on)
++    *GPIO_SET0 |= (0b1 << 16);
++    spin_sleep_ms(500);
++    
++    // clear pin 16 (turn it off)
++    *GPIO_CLR0 |= (0b1 << 16);
++    spin_sleep_ms(500);
++  }
+}
+```
+
+Then I ran `make` in the `blinky/phase3` directory, and copied `blinky.bin` to `kernel8.img` on the SD card.
+I plugged in the Pi to my MacBook and the LED started blinking!

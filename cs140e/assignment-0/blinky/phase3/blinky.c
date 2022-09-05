@@ -15,6 +15,18 @@ static void spin_sleep_ms(unsigned int ms) {
 }
 
 int main(void) {
-  // FIXME: STEP 1: Set GPIO Pin 16 as output.
-  // FIXME: STEP 2: Continuously set and clear GPIO 16.
+  // 18 is the lower bit for pin 16 (bits 20-18)
+  // | is bitwise OR operator
+  *GPIO_FSEL1 |= (0b001 << 18); 
+  
+  // infinite loop
+  for (;;) {
+    // set pin 16 (turn it on)
+    *GPIO_SET0 |= (0b1 << 16);
+    spin_sleep_ms(500);
+    
+    // clear pin 16 (turn it off)
+    *GPIO_CLR0 |= (0b1 << 16);
+    spin_sleep_ms(500);
+  }
 }
