@@ -17,7 +17,7 @@ static void spin_sleep_ms(unsigned int ms) {
 int main(void) {
   // 18 is the lower bit for pin 16 (bits 20-18)
   // | is bitwise OR operator
-  *GPIO_FSEL1 |= (0b001 << 18); 
+  *GPIO_FSEL1 |= (0b001 << 18);
   
   // infinite loop
   for (;;) {

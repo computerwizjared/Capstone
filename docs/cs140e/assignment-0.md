@@ -208,3 +208,116 @@ int main(void) {
 
 Then I ran `make` in the `blinky/phase3` directory, and copied `blinky.bin` to `kernel8.img` on the SD card.
 I plugged in the Pi to my MacBook and the LED started blinking!
+
+## Phase 4
+
+First, I opened a terminal in the `blinky/phase4` directory. I installed `rustup` using Homebrew:
+
+```
+brew install rustup
+```
+
+Then I installed Rust:
+
+```
+rustup-init
+source "$HOME/.cargo/env"
+```
+
+Then I installed the nightly toolchain release of Rust, which is required to do OS development with Rust.
+
+```
+rustup override set nightly
+rustup component add rust-src
+```
+
+I verified that Rust installed properly:
+
+```
+rustc --version
+```
+
+```
+rustc 1.64.0-nightly (4493a0f47 2022-08-02)
+```
+
+Then I installed `xargo` which is used to build the OS.
+
+```
+cargo install xargo
+```
+
+Then I ensured `xargo` installed properly:
+
+```
+xargo --version
+```
+
+```
+xargo 0.3.26
+cargo 1.64.0-nightly (85b500cca 2022-07-24)
+```
+
+Since I use Visual Studio Code as my editor, I installed [Rust Analyzer](https://rust-analyzer.github.io) to help with code completion.
+I opened the file `blinky/phase4/src/lib.rs` and edited it to add the blink functionality, very similar to the C code from Phase 3.
+
+```diff
+#[no_mangle]
+pub unsafe extern "C" fn kmain() {
+-    // FIXME: STEP 1: Set GPIO Pin 16 as output.
++
+-    // FIXME: STEP 2: Continuously set and clear GPIO 16.
+}
+```
+
+However, I found that I needed to make some other changes since I updated Rust to the latest version:
+
+1. The `asm!` macro has been merged into Rust stable, and therefore no longer needs enabled. It also defaults to `volatile`, so I removed that parameter. ([source](https://users.rust-lang.org/t/volatile-option-in-new-asm-macro/44289))
+2. I renamed `compiler_builtins_lib` to `compiler_builtins`.
+3. I removed `pointer_methods` from the feature array since it's now in Rust stable.
+4. I added `rustc_private` to the feature array.
+5. I set the Rust edition in the `blinky/phase4/Cargo.toml` as `edition = "2021"`.
+6. I removed the `rlibc` dependency in the `blinky/phase4/Cargo.toml` file.
+7. I changed the `panic_fmt` `lang` annotation to a `panic_handler` annotation in the `blink/phase4/lang_items.rs` file.
+
+I've outlined the diffs for the files below:
+
+`blinky/phase4/lib.rs`
+```diff
+-#![feature(compiler_builtins_lib, lang_items, asm, pointer_methods)]
++#![feature(compiler_builtins, lang_items, rustc_private)]
+
+...
+
+-        unsafe { asm!("nop" :::: "volatile"); }
++        unsafe { core::arch::asm!("nop"); }
+```
+
+`blinky/phase4/Cargo.toml`
+```diff
+[package]
+name = "blinky"
+version = "0.1.0"
++edition = "2021"
+
+...
+
+-[dependencies]
+-rlibc = "*"
+```
+
+`blinky/phase4/src/lang_items.rs`
+```diff
+-#[lang = "panic_fmt"] #[no_mangle] pub extern fn panic_fmt() -> ! { loop{} }
++#[panic_handler] pub extern fn panic_handler(_info: &core::panic::PanicInfo) -> ! { loop{} }
+```
+
+Then I was able to successfully build the project:
+
+```
+make
+```
+
+I copied the `blinky/phase4/build/blinky.bin` output file to the SD card, renaming to `kernel8.img`.
+
+The light started blinking, which means the OS built in Rust worked!
