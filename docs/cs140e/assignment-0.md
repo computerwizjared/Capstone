@@ -173,7 +173,7 @@ According to the documentation, the BCM2837 has a base peripheral address of `0x
 This means to control the GPIO pins, we need to use this address.
 Here is documentation specific to the registers used in this assignment:
 
-| name | peripheral address | description | size | read/write
+| name | peripheral address | description | size | read/write |
 | --- | --- | --- | --- | --- | --- |
 | GPFSEL1 | 0x7E200004 | GPIO Function Select 1 | 32 bits | R/W |
 | GPSET0 | 0x7E20001C | GPIO Pin Output Set 0 | 32 bits | W |
