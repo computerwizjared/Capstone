@@ -265,8 +265,21 @@ I opened the file `blinky/phase4/src/lib.rs` and edited it to add the blink func
 #[no_mangle]
 pub unsafe extern "C" fn kmain() {
 -    // FIXME: STEP 1: Set GPIO Pin 16 as output.
++    // 18 is the lower bit for pin 16 (bits 20-18)
++    // | is bitwise OR operator
++    GPIO_FSEL1.write_volatile(GPIO_FSEL1.read_volatile() | (0b001 << 18));
 +
 -    // FIXME: STEP 2: Continuously set and clear GPIO 16.
++    // infinite loop
++    loop {
++        // set pin 16 (turn it on)
++        GPIO_SET0.write_volatile(GPIO_SET0.read_volatile() | (0b1 << 16));
++        spin_sleep_ms(500);
++
++        // clear pin 16 (turn it off)
++        GPIO_CLR0.write_volatile(GPIO_CLR0.read_volatile() | (0b1 << 16));
++        spin_sleep_ms(500);
++    }
 }
 ```
 
