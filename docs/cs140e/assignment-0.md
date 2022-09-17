@@ -35,6 +35,12 @@ $(ASSIGNMENT_FILES): | $(FILES_DIR)
 +	curl $(BASE_URL)/assignments/0-blinky/data/$(@:$(FILES_DIR)/%=%) -o $@
 ```
 
+Then run the command again:
+
+```
+make fetch
+```
+
 To include the `files` directory in this Git repository (in case the original source goes offline),
 I modified the `.gitignore` file to include it:
 
@@ -74,8 +80,9 @@ Here is a picture of my setup!
 ![Picture of the Raspberry Pi plugged into MacBook](assets/serial-setup.jpg?raw=true)
 
 Next, unplugged my Pi, inserted my SD card into my MacBook, and opened Disk Utility.
-I selected the SD card, and clicked `Erase` in the top bar of the window.
-I named the SD card `BOOT` and selected `MS-DOS (FAT)` as the format, as shown below, and clicked `Erase`.
+I went to the "View" menu and selected "Show All Devices" to see the SD card parent disk.
+I selected the "Mass Storage Device Media" and clicked `Erase` in the top bar of the window.
+I named the SD card `BOOT`, selected `MS-DOS (FAT)` as the format, and selected `Master Boot Record` as `Scheme`, as shown below, and clicked `Erase`.
 
 ![Screenshot of Disk Utility](assets/erase-sd-card.png?raw=true)
 
