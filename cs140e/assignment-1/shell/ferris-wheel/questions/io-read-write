@@ -1,0 +1,1 @@
+io::Read has to inherit the generic type from the parent struct, it was also missing the second generic type of Error

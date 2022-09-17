@@ -1,0 +1,3 @@
+I gave MyType Clone and Copy traits with the derive attribute, so that the variables could be copied and cloned.
+
+Documentation: https://doc.rust-lang.org/rust-by-example/trait/derive.html
