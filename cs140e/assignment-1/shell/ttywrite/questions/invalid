@@ -1,0 +1,1 @@
+structopt knows to reject invalid values because they are not specified in the Opt struct

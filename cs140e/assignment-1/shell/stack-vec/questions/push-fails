@@ -1,0 +1,3 @@
+The push method from Vec in the standard libary has no return value, but the push method from our StackVec does: it returns a Result indicating that it can fail. Why can StackVec::push() fail where Vec::push() does not?
+
+StackVec uses a fixed-length array whereas Vec uses a dynamic-length array which can grow as items are added to it.

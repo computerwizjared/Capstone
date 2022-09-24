@@ -1,0 +1,3 @@
+The ReadVolatile and WriteVolatile types make it impossible to write and read, respectively, the underlying pointer. How do they accomplish this?
+
+The types wrap the underlying pointer, and there is not a public method that allows writing or reading, respectively.

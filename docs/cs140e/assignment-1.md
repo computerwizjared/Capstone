@@ -55,3 +55,40 @@ This results in more expected results. However, all the tests are supposed to fa
 ```
 
 I then went through and fixed the various failing tests and documented my changes in the `questions` folder.
+
+## Phase 2
+
+First, I answered the questions.
+Then, I implemented StackVec in `shell/stack-vec/src/lib.rs` and ran the tests from the `shell/stack-vec` directory with the command `cargo test`.
+
+I used these resources to help me implement StackVec:
+- https://doc.rust-lang.org/std/ops/trait.Deref.html
+- https://doc.rust-lang.org/std/iter/trait.IntoIterator.html
+- https://learning-rust.github.io/docs/e2.panicking.html
+- https://doc.rust-lang.org/std/macro.panic.html
+
+Then, I implemented xmodem in `shell/xmodem/src/lib.rs` and ran the tests from the `shell/xmodem` directory with the command `cargo test`.
+
+I used these resources to help me implement xmodem:
+- https://users.rust-lang.org/t/how-to-store-function-pointers-in-struct-and-call-them/51348
+- https://www.reddit.com/r/rust/comments/enexin/accessing_len_while_iterating_over_mutable_vector/
+- https://stackoverflow.com/a/38896376/5991792
+
+Then, I implemented ttywrite in `shell/ttywrite/src/main.rs` and ran the tests from the `shell/ttywrite` directory with the command `./test.sh`. I got this error:
+
+```
+error writing output file
+/usr/bin/base64: I/O error on input
+```
+
+So I had to edit `test.sh`:
+
+```diff
+function rand_string() {
+-  base64 < /dev/urandom | head -c $((1 + RANDOM % 512))
++  cat /dev/urandom | head -c $((1 + RANDOM % 512)) | base64
+}
+```
+
+I used this resource to help me implement ttywrite:
+- https://doc.rust-lang.org/std/option/

@@ -7,7 +7,7 @@ function cleanup_and_exit() {
 
 # generates a random base64 encoded string between 1 and 512 bytes
 function rand_string() {
-  base64 < /dev/urandom | head -c $((1 + RANDOM % 512))
+  cat /dev/urandom | head -c $((1 + RANDOM % 512)) | base64
 }
 
 # Use color when outputting to the terminal.

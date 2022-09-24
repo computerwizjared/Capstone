@@ -1,6 +1,4 @@
-#![feature(const_fn)]
 #![feature(decl_macro)]
-#![feature(unique)]
 #![feature(ptr_internals)]
 #![no_std]
 
