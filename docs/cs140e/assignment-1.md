@@ -1,6 +1,6 @@
 # Assignment 1
 
-I began this project by following the steps located at the CS140e course [here](https://cs140e.sergio.bz/assignments/1-shell/). All steps in this documentation are executed within the `cs140e/assignment-1` directory.
+I began this project by following the steps located at the CS140e course [here](https://cs140e.sergio.bz/assignments/1-shell/). All steps from Phase 0 and Phase 1 of this documentation are executed within the `cs140e/assignment-1` directory.
 
 ## Phase 0
 
@@ -92,3 +92,22 @@ function rand_string() {
 
 I used this resource to help me implement ttywrite:
 - https://doc.rust-lang.org/std/option/
+
+## Phase 3
+
+I cloned the `os` repository to :
+
+```
+git clone https://cs140e.sergio.bz/os.git os
+rm -rf os/.git
+```
+
+Then in the `os/kernel` directory, I ran `make` and saw this error:
+
+```
+error: no matching package named `std_unicode` found
+```
+
+I had to re-work some code to get it to compile because of this PR on Rust's repo: https://github.com/rust-lang/rust/pull/49698.
+
+I also had to re-work a lot of other code due to features becoming stable in Rust and no longer needing to be enabled.
