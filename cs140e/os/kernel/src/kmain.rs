@@ -1,16 +1,15 @@
 #![feature(lang_items)]
 #![feature(core_intrinsics)]
-#![feature(const_fn)]
-#![feature(asm)]
-#![feature(optin_builtin_traits)]
+#![feature(negative_impls)]
+#![feature(auto_traits)]
 #![feature(decl_macro)]
-#![feature(repr_align)]
-#![feature(attr_literals)]
 #![feature(never_type)]
 #![feature(ptr_internals)]
+#![feature(rustc_private)]
 
 extern crate pi;
 extern crate stack_vec;
+extern crate core;
 
 pub mod lang_items;
 pub mod mutex;

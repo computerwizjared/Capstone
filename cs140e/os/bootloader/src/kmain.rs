@@ -1,4 +1,6 @@
-#![feature(asm, lang_items)]
+#![feature(lang_items)]
+
+use std::arch::asm;
 
 extern crate xmodem;
 extern crate pi;
@@ -18,8 +20,8 @@ const MAX_BINARY_SIZE: usize = BOOTLOADER_START_ADDR - BINARY_START_ADDR;
 /// Branches to the address `addr` unconditionally.
 fn jump_to(addr: *mut u8) -> ! {
     unsafe {
-        asm!("br $0" : : "r"(addr as usize));
-        loop { asm!("nop" :::: "volatile")  }
+        asm!("br ${x}", x = in(reg) addr);
+        loop { asm!("nop")  }
     }
 }
 

@@ -1,5 +1,6 @@
 use stack_vec::StackVec;
 use console::{kprint, kprintln, CONSOLE};
+use core::unimplemented;
 
 /// Error type for `Command` parse failures.
 #[derive(Debug)]

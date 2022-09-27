@@ -1,6 +1,7 @@
-use common::IO_BASE;
+use crate::common::IO_BASE;
 use volatile::prelude::*;
 use volatile::{Volatile, ReadVolatile};
+use core::unimplemented;
 
 /// The base address for the ARM system timer registers.
 const TIMER_REG_BASE: usize = IO_BASE + 0x3000;

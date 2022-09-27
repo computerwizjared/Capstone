@@ -1,61 +1,51 @@
-// Copyright 2013 The Rust Project Developers. See the COPYRIGHT
-// file at the top-level directory of this distribution and at
-// http://rust-lang.org/COPYRIGHT.
-//
-// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
-// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
-// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
-// option. This file may not be copied, modified, or distributed
-// except according to those terms.
-
 //! The first version of the prelude of The Rust Standard Library.
 //!
-//! See the [module-level documentation](../index.html) for more.
-
-#![stable(feature = "rust1", since = "1.0.0")]
+//! See the [module-level documentation](super) for more.
 
 // Re-exported core operators
-#[stable(feature = "rust1", since = "1.0.0")]
-#[doc(no_inline)] pub use marker::{Copy, Send, Sized, Sync};
-#[stable(feature = "rust1", since = "1.0.0")]
-#[doc(no_inline)] pub use ops::{Drop, Fn, FnMut, FnOnce};
+#[doc(no_inline)]
+pub use core::marker::{Send, Sized, Sync, Unpin};
+#[doc(no_inline)]
+pub use core::ops::{Drop, Fn, FnMut, FnOnce};
 
 // Re-exported functions
-#[stable(feature = "rust1", since = "1.0.0")]
-#[doc(no_inline)] pub use mem::drop;
+#[doc(no_inline)]
+pub use core::mem::drop;
 
 // Re-exported types and traits
-// #[stable(feature = "rust1", since = "1.0.0")]
-// #[doc(no_inline)] pub use boxed::Box;
-// #[stable(feature = "rust1", since = "1.0.0")]
-// #[doc(no_inline)] pub use borrow::ToOwned;
-#[stable(feature = "rust1", since = "1.0.0")]
-#[doc(no_inline)] pub use clone::Clone;
-#[stable(feature = "rust1", since = "1.0.0")]
-#[doc(no_inline)] pub use cmp::{PartialEq, PartialOrd, Eq, Ord};
-#[stable(feature = "rust1", since = "1.0.0")]
-#[doc(no_inline)] pub use convert::{AsRef, AsMut, Into, From};
-#[stable(feature = "rust1", since = "1.0.0")]
-#[doc(no_inline)] pub use default::Default;
-#[stable(feature = "rust1", since = "1.0.0")]
-#[doc(no_inline)] pub use iter::{Iterator, Extend, IntoIterator};
-#[stable(feature = "rust1", since = "1.0.0")]
-#[doc(no_inline)] pub use iter::{DoubleEndedIterator, ExactSizeIterator};
-#[stable(feature = "rust1", since = "1.0.0")]
-#[doc(no_inline)] pub use option::Option::{self, Some, None};
-#[stable(feature = "rust1", since = "1.0.0")]
-#[doc(no_inline)] pub use result::Result::{self, Ok, Err};
-// #[stable(feature = "rust1", since = "1.0.0")]
-// #[doc(no_inline)] pub use slice::SliceConcatExt;
-// #[stable(feature = "rust1", since = "1.0.0")]
-// #[doc(no_inline)] pub use string::{String, ToString};
-// #[stable(feature = "rust1", since = "1.0.0")]
-// #[doc(no_inline)] pub use vec::Vec;
+#[doc(no_inline)]
+pub use core::convert::{AsMut, AsRef, From, Into};
+#[doc(no_inline)]
+pub use core::iter::{DoubleEndedIterator, ExactSizeIterator};
+#[doc(no_inline)]
+pub use core::iter::{Extend, IntoIterator, Iterator};
+#[doc(no_inline)]
+pub use core::option::Option::{self, None, Some};
+#[doc(no_inline)]
+pub use core::result::Result::{self, Err, Ok};
 
-// TODO: These are additions!
-#[stable(feature = "rust1", since = "1.0.0")]
-pub use core::slice::SliceExt;
-#[stable(feature = "rust1", since = "1.0.0")]
-pub use core::str::StrExt;
-#[stable(feature = "addition", since = "1.0.0")]
-pub use std_unicode::str::*;
+// Re-exported built-in macros
+#[allow(deprecated)]
+#[doc(no_inline)]
+pub use core::prelude::v1::{
+    assert, cfg, column, compile_error, concat, concat_idents, env, file, format_args,
+    format_args_nl, include, include_bytes, include_str, line, log_syntax, module_path, option_env,
+    stringify, trace_macros, Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd,
+};
+
+#[doc(no_inline)]
+pub use core::prelude::v1::concat_bytes;
+
+// Do not `doc(inline)` these `doc(hidden)` items.
+#[allow(deprecated)]
+pub use core::prelude::v1::{RustcDecodable, RustcEncodable};
+
+// Do not `doc(no_inline)` so that they become doc items on their own
+// (no public module for them to be re-exported from).
+pub use core::prelude::v1::{bench, derive, global_allocator, test, test_case};
+
+// Do not `doc(no_inline)` either.
+pub use core::prelude::v1::cfg_accessible;
+
+// Do not `doc(no_inline)` either.
+pub use core::prelude::v1::cfg_eval;

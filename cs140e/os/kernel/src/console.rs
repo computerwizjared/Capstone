@@ -1,9 +1,11 @@
 use std::io;
-use std::fmt;
+use core::fmt;
 
 use pi::uart::MiniUart;
 
 use mutex::Mutex;
+
+use core::unimplemented;
 
 /// A global singleton allowing read/write access to the console.
 pub struct Console {
@@ -67,7 +69,7 @@ pub static CONSOLE: Mutex<Console> = Mutex::new(Console::new());
 /// Internal function called by the `kprint[ln]!` macros.
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {
-    use std::fmt::Write;
+    use core::fmt::Write;
     let mut console = CONSOLE.lock();
     console.write_fmt(args).unwrap();
 }

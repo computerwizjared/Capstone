@@ -1,8 +1,10 @@
 use core::marker::PhantomData;
 
-use common::{IO_BASE, states};
+use crate::common::{IO_BASE, states};
 use volatile::prelude::*;
 use volatile::{Volatile, WriteVolatile, ReadVolatile, Reserved};
+use core::unimplemented;
+use core::panic;
 
 /// An alternative GPIO function.
 #[repr(u8)]
