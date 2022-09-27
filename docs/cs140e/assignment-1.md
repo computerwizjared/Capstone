@@ -110,4 +110,7 @@ error: no matching package named `std_unicode` found
 
 I had to re-work some code to get it to compile because of this PR on Rust's repo: https://github.com/rust-lang/rust/pull/49698.
 
-I also had to re-work a lot of other code due to features becoming stable in Rust and no longer needing to be enabled.
+But in addition to that, I had to do a LOT of other work to get it to compile.
+Since the Rust version I'm using is so much newer than the one the CS140e course is using, I had to find a way to update it.
+The easiest way was to look at an [alternative std library](https://github.com/technocreatives/core2) that someone had developed that is much slimmer and simpler than the standard Rust one.
+I swapped that std library out and made a lot of other changes to get it to compile.
