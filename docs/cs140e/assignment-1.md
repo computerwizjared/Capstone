@@ -126,3 +126,4 @@ This was pretty easy, and I was able to get the LED to blink using the driver ra
 I copied the image and ran it on my Pi, and it worked.
 
 Next, I implemented the UART driver in `os/pi/src/uart.rs`.
+I added code to output if the LED is on or off, and it worked.
