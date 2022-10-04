@@ -121,3 +121,8 @@ I built and copied the kernel.img, as before, in Assignment 0, and renamed it to
 I plugged the SD card into my Pi, and it worked!
 I honestly didn't think it would work with all the work I had to do to make things compile with the new version of Rust, but it did!
 
+Next, I implemented the GPIO driver in `os/pi/src/gpio.rs`.
+This was pretty easy, and I was able to get the LED to blink using the driver rather than directly accessing the registers unsafely.
+I copied the image and ran it on my Pi, and it worked.
+
+Next, I implemented the UART driver in `os/pi/src/uart.rs`.

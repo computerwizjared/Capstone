@@ -3,7 +3,6 @@ use core::marker::PhantomData;
 use crate::common::{IO_BASE, states};
 use volatile::prelude::*;
 use volatile::{Volatile, WriteVolatile, ReadVolatile, Reserved};
-use core::unimplemented;
 use core::panic;
 
 /// An alternative GPIO function.
@@ -53,7 +52,7 @@ states! {
     Uninitialized, Input, Output, Alt
 }
 
-/// A GPIP pin in state `State`.
+/// A GPIO pin in state `State`.
 ///
 /// The `State` generic always corresponds to an uninstantiatable type that is
 /// use solely to mark and track the state of a given GPIO pin. A `Gpio`
@@ -104,7 +103,8 @@ impl Gpio<Uninitialized> {
     /// Enables the alternative function `function` for `self`. Consumes self
     /// and returns a `Gpio` structure in the `Alt` state.
     pub fn into_alt(self, function: Function) -> Gpio<Alt> {
-        unimplemented!()
+        self.registers.FSEL[(self.pin / 10) as usize].or_mask((function as u32) << (3 * (self.pin % 10)));
+        self.transition()
     }
 
     /// Sets this pin to be an _output_ pin. Consumes self and returns a `Gpio`
@@ -123,12 +123,12 @@ impl Gpio<Uninitialized> {
 impl Gpio<Output> {
     /// Sets (turns on) the pin.
     pub fn set(&mut self) {
-        unimplemented!()
+        self.registers.SET[(self.pin / 32) as usize].write(1 << (self.pin % 32));
     }
 
     /// Clears (turns off) the pin.
     pub fn clear(&mut self) {
-        unimplemented!()
+        self.registers.CLR[(self.pin / 32) as usize].write(1 << (self.pin % 32));
     }
 }
 
@@ -136,6 +136,6 @@ impl Gpio<Input> {
     /// Reads the pin's value. Returns `true` if the level is high and `false`
     /// if the level is low.
     pub fn level(&mut self) -> bool {
-        unimplemented!()
+        self.registers.LEV[(self.pin / 32) as usize].has_mask(1 << (self.pin % 32))
     }
 }
