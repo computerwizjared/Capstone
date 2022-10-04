@@ -114,3 +114,10 @@ But in addition to that, I had to do a LOT of other work to get it to compile.
 Since the Rust version I'm using is so much newer than the one the CS140e course is using, I had to find a way to update it.
 The easiest way was to look at an [alternative std library](https://github.com/technocreatives/core2) that someone had developed that is much slimmer and simpler than the standard Rust one.
 I swapped that std library out and made a lot of other changes to get it to compile.
+
+Then I made changes to `os/pi/src/timer.rs` to implement the timer.
+I copied my code from the blinky project and pasted it into `os/kernel/src/kmain.rs`, and made the appropriate adjustments.
+I built and copied the kernel.img, as before, in Assignment 0, and renamed it to kernel8.img.
+I plugged the SD card into my Pi, and it worked!
+I honestly didn't think it would work with all the work I had to do to make things compile with the new version of Rust, but it did!
+
