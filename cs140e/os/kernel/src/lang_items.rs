@@ -1,8 +1,16 @@
 use core::panic::PanicInfo;
+use core::fmt::Write;
+
+use pi::uart::MiniUart;
 
 #[lang = "eh_personality"] pub extern fn eh_personality() {}
 
-#[panic_handler] #[no_mangle] fn panic(info: &PanicInfo) -> ! { loop{} }
+#[panic_handler] #[no_mangle] fn panic(info: &PanicInfo) -> ! { 
+    let mut uart = MiniUart::new();
+    let msg = info.message().unwrap().as_str().unwrap();
+    uart.write_str(&msg);
+    loop{}
+}
 
 #[no_mangle]
 pub unsafe extern fn memcpy(dest: *mut u8, src: *const u8, n: usize) -> *mut u8 {
