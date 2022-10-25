@@ -127,3 +127,14 @@ I copied the image and ran it on my Pi, and it worked.
 
 Next, I implemented the UART driver in `os/pi/src/uart.rs`.
 I added code to output if the LED is on or off, and it worked.
+
+After this, I implemented the shell in `os/kernel/src/console.rs`, `os/kernel/src/shell.rs`, and `os/kernel/src/kmain.rs`.
+I ran into a lot of issues with the `write_fmt` function call that held me up for a long time, but then I found [someone else who had the same issue](https://gitter.im/cs140e-rust/Lobby?at=5ab1c572c3c5f8b90d96bfd4), which led me to the solution.
+For reference, I placed the text from `@paulmeyer` below:
+
+> paulmeyer @paulmeyer Mar 20 2018 21:37
+> Interesting note: I was working on the bootloader and having some issues, and couldn't get the console to work (for printing debug messages). Debugged a bit, then went back to the previously working 'shell' kernel. That wouldn't print now either! Wasted a day debugging it, chasing it down into the write_fmt in the std_library hanging somewhere. I finally backed up to my working revision from 2 days ago, and that didn't work either! Gremlins. Finally figured it out: I had the bootloader config.txt on the SD card with the 0x4000000 location to load the binary (needed for the bootloader) The shell kernel still builds/links with 0x80000. Because most of the branches/loads are relative branches in assembly (don't care about the absolute location of the code), or explicitly memory mapped locations (GPIO, UART, etc.) lots of stuff worked perfectly. However, as soon as the code got to someplace it needed to do an absolute branch (likely off into some part of the std library that was far away, or some kind of branch table), it branched to 0x80xxx when my code lived at 0x4000xxx and started executing garbage, likely 0's, effectively a hang in this case. Make sure to switch the config.txt back if you go back to any of the old code!!
+
+I realized I didn't even get the firmware according to the cs140e website at the beginning.
+I had to download it from https://cs140e.sergio.bz/files/firmware.tar.gz and copy the config.txt to the SD card.
+Once I did that, `write_fmt` started working properly!

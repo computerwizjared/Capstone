@@ -1,27 +1,16 @@
-use core::fmt::Write;
-
-use pi::uart::MiniUart;
+use console::{kprint, kprintln, CONSOLE};
 use stack_vec::StackVec;
-use console::{CONSOLE, kprint, kprintln};
-
-macro_rules! printtest {
-    ($expression:expr) => ({
-       //use core::fmt::Write;
-        //let mut uart = pi::uart::MiniUart::new();
-        //uart.write_str($expression);
-    });
-}
 
 /// Error type for `Command` parse failures.
 #[derive(Debug)]
 enum Error {
     Empty,
-    TooManyArgs
+    TooManyArgs,
 }
 
 /// A structure representing a single shell command.
 struct Command<'a> {
-    args: StackVec<'a, &'a str>
+    args: StackVec<'a, &'a str>,
 }
 
 impl<'a> Command<'a> {
@@ -54,22 +43,13 @@ impl<'a> Command<'a> {
 /// Starts a shell using `prefix` as the prefix for each line. This function
 /// never returns: it is perpetually in a shell loop.
 pub fn shell(prefix: &str) {
-    MiniUart::new().write_str("Debug 1").unwrap();
-    MiniUart::new().write_fmt(format_args!("{}", "Debug 2")).unwrap();
-    /*loop {
-        printtest!("1\n");
+    loop {
         kprint!("{}", prefix);
-        printtest!("2\n");
         let mut storage = [0u8; 512];
         let mut input = StackVec::new(&mut storage);
-        printtest!("3\n");
-        //while let byte = console.read_byte() {
         loop {
-            printtest!("4\n");
             let byte = CONSOLE.lock().read_byte();
-            printtest!("5\n");
             kprint!("{}", byte as char);
-            printtest!("6\n");
             if byte == 0x8 || byte == 0x7f {
                 if !input.is_empty() {
                     input.pop();
@@ -86,7 +66,7 @@ pub fn shell(prefix: &str) {
                                 kprint!("{} ", arg);
                             }
                             kprintln!();
-                        },
+                        }
                         path => {
                             kprintln!("unknown command: {}", path);
                         }
@@ -104,5 +84,5 @@ pub fn shell(prefix: &str) {
                 kprint!("{}", 0x7); // beep, invalid character
             }
         }
-    }*/
+    }
 }

@@ -4,5 +4,6 @@
         "kernel/Cargo.toml",
         "pi/Cargo.toml",
         "std/Cargo.toml",
+        "volatile/Cargo.toml"
     ]
 }

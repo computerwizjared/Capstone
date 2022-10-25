@@ -3,11 +3,11 @@ use core::option::Option;
 use core::result::Result;
 
 use volatile::prelude::*;
-use volatile::{Volatile, ReadVolatile, Reserved};
+use volatile::{ReadVolatile, Reserved, Volatile};
 
-use crate::timer;
 use crate::common::IO_BASE;
-use crate::gpio::{Gpio, Function};
+use crate::gpio::{Function, Gpio};
+use crate::timer;
 
 /// The base address for the `MU` registers.
 const MU_REG_BASE: usize = IO_BASE + 0x215040;
@@ -93,7 +93,11 @@ impl MiniUart {
     /// Write the byte `byte`. This method blocks until there is space available
     /// in the output FIFO.
     pub fn write_byte(&mut self, byte: u8) {
-        while !self.registers.AUX_MU_LSR_REG.has_mask(LsrStatus::TxAvailable as u8) {
+        while !self
+            .registers
+            .AUX_MU_LSR_REG
+            .has_mask(LsrStatus::TxAvailable as u8)
+        {
             // block until the transmit FIFO is empty
         }
 
@@ -104,7 +108,9 @@ impl MiniUart {
     /// method returns `true`, a subsequent call to `read_byte` is guaranteed to
     /// return immediately. This method does not block.
     pub fn has_byte(&self) -> bool {
-        self.registers.AUX_MU_LSR_REG.has_mask(LsrStatus::DataReady as u8)
+        self.registers
+            .AUX_MU_LSR_REG
+            .has_mask(LsrStatus::DataReady as u8)
     }
 
     /// Blocks until there is a byte ready to read. If a read timeout is set,
@@ -157,8 +163,8 @@ impl fmt::Write for MiniUart {
                 b'\n' => {
                     self.write_byte(b'\r');
                     self.write_byte(b'\n');
-                },
-                _ => self.write_byte(byte)
+                }
+                _ => self.write_byte(byte),
             }
         }
         Ok(())
@@ -167,8 +173,8 @@ impl fmt::Write for MiniUart {
 
 #[cfg(feature = "std")]
 mod uart_io {
-    use std::io;
     use super::MiniUart;
+    use std::io;
 
     // FIXME: Implement `io::Read` and `io::Write` for `MiniUart`.
     //
@@ -190,7 +196,7 @@ mod uart_io {
                     }
                     Ok(i)
                 }
-                Err(()) => Err(io::Error::new(io::ErrorKind::TimedOut, "read timed out"))
+                Err(()) => Err(io::Error::new(io::ErrorKind::TimedOut, "read timed out")),
             }
         }
     }
