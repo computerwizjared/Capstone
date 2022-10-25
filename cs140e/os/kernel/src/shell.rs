@@ -53,7 +53,7 @@ pub fn shell(prefix: &str) {
             if byte == 0x8 || byte == 0x7f {
                 if !input.is_empty() {
                     input.pop();
-                    kprint!("{} {}", 0x8, 0x8);
+                    kprint!("{} {}", 0x8 as char, 0x8 as char);
                 }
             } else if byte == b'\r' || byte == b'\n' {
                 kprintln!();
