@@ -138,3 +138,10 @@ For reference, I placed the text from `@paulmeyer` below:
 I realized I didn't even get the firmware according to the cs140e website at the beginning.
 I had to download it from https://cs140e.sergio.bz/files/firmware.tar.gz and copy the config.txt to the SD card.
 Once I did that, `write_fmt` started working properly!
+
+# Phase 4
+
+After this, I implemented the bootloader in `os/bootloader/src/kmain.rs`, which was straightforward.
+I encountered a bug in my UART implementation, though, that caused "BrokenPipe - bad transmit" errors.
+I found that the internal timer returns the time in microseconds, but the function expected nanoseconds.
+So, I simply added a multiplier for the function's argument to fix it.
