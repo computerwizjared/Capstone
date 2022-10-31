@@ -127,7 +127,7 @@ impl MiniUart {
                 let start = timer::current_time();
 
                 while !self.has_byte() {
-                    if timer::current_time() - start > (timeout as u64) {
+                    if timer::current_time() - start > (timeout as u64 * 1000) {
                         return Err(());
                     }
                 }

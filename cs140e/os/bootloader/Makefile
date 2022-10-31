@@ -4,7 +4,7 @@ CROSS ?= $(TARGET)
 CC := $(CROSS)-gcc
 CCFLAGS ?= -Wall -O2 -nostdlib -nostartfiles -ffreestanding -pie -fpie
 # LDFLAGS ?= --gc-sections -static -pie -nostdlib -nostartfiles --no-dynamic-linker
-LDFLAGS ?= --gc-sections -static -nostdlib -nostartfiles --no-dynamic-linker
+LDFLAGS ?= --gc-sections -static -nostdlib --no-dynamic-linker
 XARGO ?= CARGO_INCREMENTAL=0 RUST_TARGET_PATH="$(shell pwd)" xargo
 
 LD_LAYOUT := ext/layout.ld

@@ -4,15 +4,13 @@
 #![feature(panic_info_message)]
 #![feature(negative_impls)]
 
-use pi::{gpio::Gpio, uart::MiniUart};
-
+extern crate core;
 extern crate pi;
 extern crate stack_vec;
-extern crate core;
 
+pub mod console;
 pub mod lang_items;
 pub mod mutex;
-pub mod console;
 pub mod shell;
 
 #[no_mangle]
