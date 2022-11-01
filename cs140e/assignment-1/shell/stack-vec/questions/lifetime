@@ -1,0 +1,7 @@
+The compiler would reject the following StackVec declaration:
+struct StackVec<'a, T> { buffer: &'a mut [T], len: usize }
+If we add an 'a bound to T, however, the compiler is satisifed:
+struct StackVec<'a, T: 'a> { buffer: &'a mut [T], len: usize }
+Why is the bound required? What could go wrong if that bound wasn’t enforced by Rust?
+
+The 'a bound ensures that the type has a lifetime that is at least equal to the parameter.

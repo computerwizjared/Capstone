@@ -1,0 +1,3 @@
+Removing the derive macro causes the compilation to fail because the derive imports the required functionality to allow passing variables by value rather than reference.
+
+Rust defaults to pass-by-reference in all cases as documented here: https://doc.rust-lang.org/rust-by-example/scope/move.html

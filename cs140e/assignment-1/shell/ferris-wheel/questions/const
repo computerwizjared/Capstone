@@ -1,0 +1,1 @@
+I had to add the const attribute to the function to work with constants.

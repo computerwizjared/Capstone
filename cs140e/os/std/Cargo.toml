@@ -1,0 +1,17 @@
+[package]
+name = "std"
+version = "0.1.0"
+authors = ["Sergio Benitez <sb@sergio.bz>"]
+edition = "2021"
+
+[dependencies]
+memchr = { version = "2", default-features = false }
+
+[features]
+default = ["nightly"]
+std = ["alloc"]
+alloc = []
+nightly = []
+
+[package.metadata.docs.rs]
+features = ["nightly"]

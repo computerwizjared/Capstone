@@ -1,0 +1,3 @@
+I made the parameter mutable by adding "mut". https://www.snoyman.com/blog/2020/05/no-mutable-parameters-in-rust/
+
+I couldn't simply add "mut" in front of the variable name because it would only make the reference mutable, not the value, so I added "mut" after the "&" to mark the value mutable.
