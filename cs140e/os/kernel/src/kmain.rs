@@ -5,10 +5,13 @@
 #![feature(negative_impls)]
 
 extern crate core;
+extern crate embedded_graphics;
 extern crate pi;
+extern crate ssd1306;
 extern crate stack_vec;
 
 pub mod console;
+pub mod display;
 pub mod lang_items;
 pub mod mutex;
 pub mod shell;
@@ -20,5 +23,6 @@ pub extern "C" fn kmain() {
 
     //pin16.set();
     //console::kprintln!("Testing!");
+    //display::display();
     shell::shell("> ");
 }

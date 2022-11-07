@@ -1,4 +1,6 @@
 use console::{kprint, kprintln, CONSOLE};
+use display;
+use pi::i2c::I2C;
 use stack_vec::StackVec;
 
 /// Error type for `Command` parse failures.
@@ -43,6 +45,8 @@ impl<'a> Command<'a> {
 /// Starts a shell using `prefix` as the prefix for each line. This function
 /// never returns: it is perpetually in a shell loop.
 pub fn shell(prefix: &str) {
+    //let mut i2c = I2C::new(250_000_000, false);
+
     loop {
         kprint!("{}", prefix);
         let mut storage = [0u8; 512];
@@ -66,6 +70,21 @@ pub fn shell(prefix: &str) {
                                 kprint!("{} ", arg);
                             }
                             kprintln!();
+                        }
+                        "d" => {
+                            /*kprintln!("scan I2C devices connected to RPi");
+                            let mut storage = [0u8; 512];
+                            let devices = i2c.scan_devices(&mut storage);
+                            for d in devices {
+                                kprintln!("device detected at 0x{:2X}", d);
+                            }*/
+                            // i2c.check_device(0x3C)
+                            /*match i2c.write_reg_u8(0x3C, reg, data) {
+                                //i2c.write_reg_u8(0x3C, 0x00, 0xA6) {
+                                Ok(_) => kprintln!("Success"),
+                                Err(e) => kprintln!("Error {}", e),
+                            }*/
+                            display::display();
                         }
                         path => {
                             kprintln!("unknown command: {}", path);

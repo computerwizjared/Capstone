@@ -23,6 +23,8 @@ lto = true
 
 [dependencies]
 pi = { path = "../pi", features = ["std"] }
+ssd1306 = "0.7.1"
+embedded-graphics = "0.7.1"
 
 # from assignment 1
 stack-vec = { path = "../../assignment-1/shell/stack-vec/" }

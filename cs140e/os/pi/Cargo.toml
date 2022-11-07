@@ -6,6 +6,11 @@ edition = "2021"
 
 [dependencies]
 volatile = { path = "../volatile" }
+display-interface-i2c = "0.4.0"
+embedded-hal = "0.2.7"
+
+# from assignment 1
+stack-vec = { path = "../../assignment-1/shell/stack-vec/" }
 
 [features]
 std = []

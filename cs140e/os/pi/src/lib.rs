@@ -6,9 +6,12 @@
 
 #[cfg(feature = "std")]
 extern crate core;
+extern crate display_interface_i2c;
+extern crate stack_vec;
 extern crate volatile;
 
 pub mod common;
 pub mod gpio;
+pub mod i2c;
 pub mod timer;
 pub mod uart;
