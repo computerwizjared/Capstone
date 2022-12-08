@@ -23,6 +23,5 @@ pub extern "C" fn kmain() {
 
     //pin16.set();
     //console::kprintln!("Testing!");
-    //display::display();
     shell::shell("> ");
 }

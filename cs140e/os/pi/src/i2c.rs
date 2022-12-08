@@ -49,12 +49,6 @@ impl I2C {
         let registers = unsafe { &mut *(BSC0_REG_BASE as *mut Registers) };
         Gpio::new(2).into_alt(Function::Alt0);
         Gpio::new(3).into_alt(Function::Alt0);
-        let mut reset = Gpio::new(24).into_output();
-        reset.set();
-        spin_sleep_ms(1);
-        reset.clear();
-        spin_sleep_ms(10);
-        reset.set();
 
         let clock_divisor = if fast_mode {
             core_speed / 400_000
